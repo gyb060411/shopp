@@ -16,6 +16,7 @@ import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.gy.shoppproject.R;
 import com.gy.shoppproject.adapter.MainGridAdapter;
 import com.gy.shoppproject.adapter.MainGridAdapter1;
+import com.gy.shoppproject.adapter.MainGridAdapter2;
 import com.gy.shoppproject.adapter.MainSingleAdapter;
 import com.gy.shoppproject.adapter.MainSingleAdapter1;
 import com.gy.shoppproject.adapter.MainSingleAdapter2;
@@ -41,6 +42,8 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
     private MainGridAdapter1 mainGridAdapter1;
     private MainSingleAdapter1 mainSingleAdapter1;
     private MainSingleAdapter2 mainSingleAdapter2;
+    private ArrayList<HomeBean.DataBean.NewGoodsListBean> newGoodsListBeans1;
+    private MainGridAdapter2 mainGridAdapter2;
 
 
     @Override
@@ -86,8 +89,8 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
         mainSingleAdapter2 = new MainSingleAdapter2(singleLayoutHelper2,getActivity());
 
         GridLayoutHelper gridLayoutHelper2 = new GridLayoutHelper(2);
-        new ArrayList<HomeBean.DataBean.NewGoodsListBean>()
-        mainGridAdapter2 = new MainGridAdapter2(gridLayoutHelper2, getActivity(), newGoodsListBeans);
+        newGoodsListBeans1 = new ArrayList<>();
+        mainGridAdapter2 = new MainGridAdapter2(gridLayoutHelper2, getActivity(), newGoodsListBeans1);
 
         delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         delegateAdapter.addAdapter(this.mainSingleAdapter);
@@ -95,6 +98,7 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
         delegateAdapter.addAdapter(mainSingleAdapter1);
         delegateAdapter.addAdapter(mainGridAdapter1);
         delegateAdapter.addAdapter(mainSingleAdapter2);
+        delegateAdapter.addAdapter(mainGridAdapter2);
         mRecycler.setLayoutManager(virtualLayoutManager);
         mRecycler.setAdapter(delegateAdapter);
 
@@ -111,6 +115,9 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
         List<HomeBean.DataBean.BrandListBean> brandList = homeBean.getData().getBrandList();
         newGoodsListBeans.addAll(brandList);
         mainGridAdapter1.notifyDataSetChanged();
+        List<HomeBean.DataBean.NewGoodsListBean> newGoodsList = homeBean.getData().getNewGoodsList();
+        newGoodsListBeans1.addAll(newGoodsList);
+        mainGridAdapter2.notifyDataSetChanged();
     }
 
     @Override
