@@ -130,7 +130,7 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
         delegateAdapter.addAdapter(mainLinearAdapter);
         mRecycler.setLayoutManager(virtualLayoutManager);
         mRecycler.setAdapter(delegateAdapter);
-
+        mainLinearAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -150,6 +150,9 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
         List<HomeBean.DataBean.HotGoodsListBean> hotGoodsList = homeBean.getData().getHotGoodsList();
         hotGoodsListBeans.addAll(hotGoodsList);
         mainGridAdapter3.notifyDataSetChanged();
+        List<HomeBean.DataBean.TopicListBean> topicList = homeBean.getData().getTopicList();
+        topicListBeans.addAll(topicList);
+        mainLinearAdapter.notifyDataSetChanged();
     }
 
     @Override
