@@ -8,12 +8,20 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.vlayout.DelegateAdapter;
+import com.alibaba.android.vlayout.VirtualLayoutManager;
+import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.gy.shoppproject.R;
+import com.gy.shoppproject.adapter.MainSingleAdapter;
+import com.gy.shoppproject.bean.HomeBean;
+
+import java.util.ArrayList;
 
 
 public class HomeFragment extends Fragment {
 
     private RecyclerView mRecycler;
+    private ArrayList<HomeBean.DataBean.BannerBean> list;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,27 +34,18 @@ public class HomeFragment extends Fragment {
 
     private void initView(View view) {
         mRecycler = view.findViewById(R.id.recycler);
+        list = new ArrayList<>();
+        VirtualLayoutManager virtualLayoutManager =new VirtualLayoutManager(getActivity());
+        RecyclerView.RecycledViewPool pool = new RecyclerView.RecycledViewPool();
+        mRecycler.setRecycledViewPool(pool);
+        SingleLayoutHelper singleLayoutHelper = new SingleLayoutHelper();
+        MainSingleAdapter mainSingleAdapter = new MainSingleAdapter(singleLayoutHelper,getActivity(),list);
 
+
+        DelegateAdapter delegateAdapter = new DelegateAdapter(virtualLayoutManager);
+        delegateAdapter.addAdapter(mainSingleAdapter);
+        mRecycler.setLayoutManager(virtualLayoutManager);
+        mRecycler.setAdapter(delegateAdapter);
     }
 }
 
-
-/* <EditText
-        android:gravity="center"
-        android:layout_marginLeft="30dp"
-        android:background="@drawable/shape"
-        android:layout_width="350dp"
-        android:layout_height="50dp"/>
-    <ImageView
-        android:src="@drawable/a12"
-        android:layout_marginLeft="80dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:text="商品搜索，共239款好物"
-        android:textSize="20dp"
-        android:layout_marginLeft="120dp"
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-*/
