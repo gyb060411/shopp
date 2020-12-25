@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,12 +21,14 @@ import com.gy.shoppproject.R;
 import com.gy.shoppproject.bean.HomeBean;
 import com.gy.shoppproject.fragment.HomeFragment;
 import com.youth.banner.Banner;
+import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 
 public class MainSingleAdapter extends DelegateAdapter.Adapter{
     SingleLayoutHelper singleLayoutHelper ;
     Context context;
+
     private ArrayList<HomeBean.DataBean.BannerBean> list;
     public MainSingleAdapter(SingleLayoutHelper singleLayoutHelper, Context context, ArrayList<HomeBean.DataBean.BannerBean> list) {
         this.singleLayoutHelper = singleLayoutHelper;
@@ -47,9 +50,16 @@ public class MainSingleAdapter extends DelegateAdapter.Adapter{
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        HomeBean.DataBean.BannerBean bannerBean = list.get(position);
+
         SingHolder singHolder= (SingHolder) holder;
-        Glide.with(context).load(bannerBean.getImage_url()).into(singHolder.mbanner);
+        singHolder.mbanner.setImages(list).setImageLoader(new ImageLoader() {
+            @Override
+            public void displayImage(Context context, Object path, ImageView imageView) {
+                HomeBean.DataBean.BannerBean bannerBean1= (HomeBean.DataBean.BannerBean) path;
+                Glide.with(context).load(bannerBean1.getImage_url()).into(imageView);
+            }
+        }).start();
+
     }
 
     @Override
