@@ -31,18 +31,14 @@ public class MainActivity extends AppCompatActivity {
     private CanSlidingViewpager mViewPager;
     private BottomNavigationView mNavView;
     private ArrayList<Fragment> fragment;
-    //    private static final String [] FRAGMENT_TAG={""}
+
     MyFragmentPagerAdapter myFragmentPagerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         initView();
     }
-
-
     private void initView() {
         mViewPager = findViewById(R.id.viewPager);
         mNavView = findViewById(R.id.nav_view);
