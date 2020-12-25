@@ -1,94 +1,134 @@
 package com.gy.shoppproject;
 
 import android.os.Bundle;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gy.shoppproject.fragment.AlbumFragment;
 import com.gy.shoppproject.fragment.CartFragment;
 import com.gy.shoppproject.fragment.ClassfiyFragment;
 import com.gy.shoppproject.fragment.HomeFragment;
 import com.gy.shoppproject.fragment.MeFragment;
+import com.gy.shoppproject.utils.CanSlidingViewpager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private LinearLayout mFlContainer;
-    private RadioGroup mRgGroup;
-    private RadioButton mRbHome;
-    private RadioButton mRbAlbum;
-    private RadioButton mRbClassify;
-    private RadioButton mRbCart;
-    private RadioButton mRbMe;
     private HomeFragment homeFragment;
     private AlbumFragment albumFragment;
     private ClassfiyFragment classfiyFragment;
     private CartFragment cartFragment;
     private MeFragment meFragment;
-
-
+    private CanSlidingViewpager mViewPager;
+    private BottomNavigationView mNavView;
+    private ArrayList<Fragment> fragment;
+    //    private static final String [] FRAGMENT_TAG={""}
+    MyFragmentPagerAdapter myFragmentPagerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initView();
 
-        homeFragment = new HomeFragment();
-        albumFragment = new AlbumFragment();
-        classfiyFragment = new ClassfiyFragment();
-        cartFragment = new CartFragment();
-        meFragment = new MeFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction
-                .add(R.id.fl_container, homeFragment)
-                .add(R.id.fl_container, albumFragment)
-                .add(R.id.fl_container, classfiyFragment)
-                .add(R.id.fl_container, cartFragment)
-                .add(R.id.fl_container, meFragment)
-                .hide(albumFragment)
-                .hide(classfiyFragment)
-                .hide(cartFragment)
-                .hide(meFragment)
-                .show(homeFragment);
+
+        initView();
     }
+
 
     private void initView() {
-        mFlContainer = findViewById(R.id.fl_container);
-        mRgGroup = findViewById(R.id.rg_group);
-        mRbHome = findViewById(R.id.rb_home);
-        mRbAlbum = findViewById(R.id.rb_album);
-        mRbClassify = findViewById(R.id.rb_classify);
-        mRbCart = findViewById(R.id.rb_cart);
-        mRbMe = findViewById(R.id.rb_me);
+        mViewPager = findViewById(R.id.viewPager);
+        mNavView = findViewById(R.id.nav_view);
+        mViewPager.setScrollble(false);
+        initFragment();
 
-        mRgGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                switch (i){
-                    case R.id.rb_home:
-                        fragmentTransaction.hide(albumFragment).hide(classfiyFragment).hide(cartFragment).hide(meFragment).show(homeFragment).commit();
-                        break;
-                    case R.id.rb_album:
-                        fragmentTransaction.hide(homeFragment).hide(classfiyFragment).hide(cartFragment).hide(meFragment).show(albumFragment).commit();
-                        break;
-                    case R.id.rb_classify:
-                        fragmentTransaction.hide(homeFragment).hide(albumFragment).hide(cartFragment).hide(meFragment).show(classfiyFragment).commit();
-                        break;
-                    case R.id.rb_cart:
-                        fragmentTransaction.hide(homeFragment).hide(albumFragment).hide(classfiyFragment).hide(meFragment).show(cartFragment).commit();
-                        break;
-                    case R.id.rb_me:
-                        fragmentTransaction.hide(homeFragment).hide(albumFragment).hide(classfiyFragment).hide(cartFragment).show(meFragment).commit();
-                        break;
-                }
-            }
-        });
+        myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(),fragment);
+        mViewPager.setAdapter(myFragmentPagerAdapter);
+         mNavView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+           @Override
+           public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+               switch (item.getItemId()){
+                   case R.id.navigation_home:
+                       item.setIcon(R.mipmap.ic_menu_choice_pressed);
+                       mViewPager.setCurrentItem(0);
+                       return  true;
+                   case R.id.navigation_topic:
+                       item.setIcon(R.mipmap.ic_menu_topic_pressed);
+                       mViewPager.setCurrentItem(1);
+                       return true;
+                   case R.id.navigation_sort:
+                       item.setIcon(R.mipmap.ic_menu_sort_pressed);
+                       mViewPager.setCurrentItem(2);
+                       return true;
+                   case R.id.navigation_shop:
+                       item.setIcon(R.mipmap.ic_menu_shoping_pressed);
+                       mViewPager.setCurrentItem(3);
+                       return true;
+                   case R.id.navigation_me:
+                       item.setIcon(R.mipmap.ic_menu_me_pressed);
+                       mViewPager.setCurrentItem(4);
+                       return true;
+               }
+               return false;
+           }
+       });
+       mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+           @Override
+           public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+           }
+
+           @Override
+           public void onPageSelected(int position) {
+                mNavView.getMenu().getItem(position).setChecked(true);
+           }
+
+           @Override
+           public void onPageScrollStateChanged(int state) {
+
+           }
+       });
     }
 
+    private void initFragment() {
+        fragment = new ArrayList<>();
+        fragment.add(new HomeFragment());
+        fragment.add(new AlbumFragment());
+        fragment.add(new ClassfiyFragment());
+        fragment.add(new CartFragment());
+        fragment.add(new MeFragment());
+    }
+    class MyFragmentPagerAdapter extends FragmentPagerAdapter{
 
+        List<Fragment> fragments;
+        public MyFragmentPagerAdapter(@NonNull FragmentManager fm,List<Fragment> fragments) {
+            super(fm);
+            this.fragments=fragments;
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragment.size();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int id = getIntent().getIntExtra("id", 0);
+        mViewPager.setCurrentItem(id);
+    }
 }
