@@ -12,12 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
+import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.gy.shoppproject.R;
 import com.gy.shoppproject.adapter.MainGridAdapter;
 import com.gy.shoppproject.adapter.MainGridAdapter1;
 import com.gy.shoppproject.adapter.MainGridAdapter2;
 import com.gy.shoppproject.adapter.MainGridAdapter3;
+import com.gy.shoppproject.adapter.MainLinearAdapter;
 import com.gy.shoppproject.adapter.MainSingleAdapter;
 import com.gy.shoppproject.adapter.MainSingleAdapter1;
 import com.gy.shoppproject.adapter.MainSingleAdapter2;
@@ -51,6 +53,8 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
     private ArrayList<HomeBean.DataBean.HotGoodsListBean> hotGoodsListBeans;
     private MainGridAdapter3 mainGridAdapter3;
     private MainSingleAdapter4 mainSingleAdapter4;
+    private ArrayList<HomeBean.DataBean.TopicListBean> topicListBeans;
+    private MainLinearAdapter mainLinearAdapter;
 
 
     @Override
@@ -109,8 +113,10 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
         SingleLayoutHelper singleLayoutHelper4 = new SingleLayoutHelper();
         mainSingleAdapter4 = new MainSingleAdapter4(singleLayoutHelper4,getActivity());
 
+        LinearLayoutHelper linearLayoutHelper = new LinearLayoutHelper();
+        topicListBeans = new ArrayList<>();
+        mainLinearAdapter = new MainLinearAdapter(linearLayoutHelper, getActivity(), topicListBeans);
 
-        
         delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         delegateAdapter.addAdapter(this.mainSingleAdapter);
         delegateAdapter.addAdapter(mainGridAdapter);
@@ -121,6 +127,7 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
         delegateAdapter.addAdapter(mainSingleAdapter3);
         delegateAdapter.addAdapter(mainGridAdapter3);
         delegateAdapter.addAdapter(mainSingleAdapter4);
+        delegateAdapter.addAdapter(mainLinearAdapter);
         mRecycler.setLayoutManager(virtualLayoutManager);
         mRecycler.setAdapter(delegateAdapter);
 

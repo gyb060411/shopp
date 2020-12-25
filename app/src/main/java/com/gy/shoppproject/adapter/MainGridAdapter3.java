@@ -47,7 +47,7 @@ public class MainGridAdapter3 extends DelegateAdapter.Adapter {
         Item8Holder item8Holder= (Item8Holder) holder;
         HomeBean.DataBean.HotGoodsListBean hotGoodsListBean = hotGoodsListBeans.get(position);
         item8Holder.mName.setText(hotGoodsListBean.getName());
-        item8Holder.mPrice.setText(hotGoodsListBean.getRetail_price());
+        item8Holder.mPrice.setText("￥"+hotGoodsListBean.getRetail_price());
         item8Holder.mBride.setText(hotGoodsListBean.getGoods_brief());
         Glide.with(context).load(hotGoodsListBean.getList_pic_url()).into(item8Holder.mImg);
     }
