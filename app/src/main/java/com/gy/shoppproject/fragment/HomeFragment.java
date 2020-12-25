@@ -15,7 +15,10 @@ import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.gy.shoppproject.R;
 import com.gy.shoppproject.adapter.MainGridAdapter;
+import com.gy.shoppproject.adapter.MainGridAdapter1;
 import com.gy.shoppproject.adapter.MainSingleAdapter;
+import com.gy.shoppproject.adapter.MainSingleAdapter1;
+import com.gy.shoppproject.adapter.MainSingleAdapter2;
 import com.gy.shoppproject.base.BaseActivity;
 import com.gy.shoppproject.base.BaseFragment;
 import com.gy.shoppproject.bean.HomeBean;
@@ -34,6 +37,10 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
     private ArrayList<HomeBean.DataBean.ChannelBean> channelBeans;
     private MainSingleAdapter mainSingleAdapter;
     private MainGridAdapter mainGridAdapter;
+    private ArrayList<HomeBean.DataBean.BrandListBean> newGoodsListBeans;
+    private MainGridAdapter1 mainGridAdapter1;
+    private MainSingleAdapter1 mainSingleAdapter1;
+    private MainSingleAdapter2 mainSingleAdapter2;
 
 
     @Override
@@ -58,19 +65,36 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
         VirtualLayoutManager virtualLayoutManager =new VirtualLayoutManager(getActivity());
         RecyclerView.RecycledViewPool pool = new RecyclerView.RecycledViewPool();
         mRecycler.setRecycledViewPool(pool);
+
+
         SingleLayoutHelper singleLayoutHelper = new SingleLayoutHelper();
         mainSingleAdapter = new MainSingleAdapter(singleLayoutHelper,getActivity(),list);
 
 
         GridLayoutHelper gridLayoutHelper = new GridLayoutHelper(5);
-
         channelBeans = new ArrayList<>();
         mainGridAdapter = new MainGridAdapter(gridLayoutHelper,getActivity(),channelBeans);
 
+        SingleLayoutHelper singleLayoutHelper1 = new SingleLayoutHelper();
+        mainSingleAdapter1 = new MainSingleAdapter1(singleLayoutHelper1,getActivity());
+
+        GridLayoutHelper gridLayoutHelper1 = new GridLayoutHelper(2);
+        newGoodsListBeans = new ArrayList<>();
+        mainGridAdapter1 = new MainGridAdapter1(gridLayoutHelper1, getActivity(), newGoodsListBeans);
+
+        SingleLayoutHelper singleLayoutHelper2 = new SingleLayoutHelper();
+        mainSingleAdapter2 = new MainSingleAdapter2(singleLayoutHelper2,getActivity());
+
+        GridLayoutHelper gridLayoutHelper2 = new GridLayoutHelper(2);
+        new ArrayList<HomeBean.DataBean.NewGoodsListBean>()
+        mainGridAdapter2 = new MainGridAdapter2(gridLayoutHelper2, getActivity(), newGoodsListBeans);
 
         delegateAdapter = new DelegateAdapter(virtualLayoutManager);
-        delegateAdapter.addAdapter(mainSingleAdapter);
+        delegateAdapter.addAdapter(this.mainSingleAdapter);
         delegateAdapter.addAdapter(mainGridAdapter);
+        delegateAdapter.addAdapter(mainSingleAdapter1);
+        delegateAdapter.addAdapter(mainGridAdapter1);
+        delegateAdapter.addAdapter(mainSingleAdapter2);
         mRecycler.setLayoutManager(virtualLayoutManager);
         mRecycler.setAdapter(delegateAdapter);
 
@@ -84,6 +108,9 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
         List<HomeBean.DataBean.ChannelBean> channel = homeBean.getData().getChannel();
         channelBeans.addAll(channel);
         mainGridAdapter.notifyDataSetChanged();
+        List<HomeBean.DataBean.BrandListBean> brandList = homeBean.getData().getBrandList();
+        newGoodsListBeans.addAll(brandList);
+        mainGridAdapter1.notifyDataSetChanged();
     }
 
     @Override
