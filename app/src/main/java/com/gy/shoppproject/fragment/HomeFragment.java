@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
+import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.gy.shoppproject.R;
+import com.gy.shoppproject.adapter.MainGridAdapter;
 import com.gy.shoppproject.adapter.MainSingleAdapter;
 import com.gy.shoppproject.base.BaseActivity;
 import com.gy.shoppproject.base.BaseFragment;
@@ -29,7 +31,9 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
     private RecyclerView mRecycler;
     private ArrayList<HomeBean.DataBean.BannerBean> list;
     private DelegateAdapter delegateAdapter;
-
+    private ArrayList<HomeBean.DataBean.ChannelBean> channelBeans;
+    private MainSingleAdapter mainSingleAdapter;
+    private MainGridAdapter mainGridAdapter;
 
 
     @Override
@@ -55,19 +59,31 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
         RecyclerView.RecycledViewPool pool = new RecyclerView.RecycledViewPool();
         mRecycler.setRecycledViewPool(pool);
         SingleLayoutHelper singleLayoutHelper = new SingleLayoutHelper();
-        MainSingleAdapter mainSingleAdapter = new MainSingleAdapter(singleLayoutHelper,getActivity(),list);
+        mainSingleAdapter = new MainSingleAdapter(singleLayoutHelper,getActivity(),list);
+
+
+        GridLayoutHelper gridLayoutHelper = new GridLayoutHelper(5);
+
+        channelBeans = new ArrayList<>();
+        mainGridAdapter = new MainGridAdapter(gridLayoutHelper,getActivity(),channelBeans);
+
 
         delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         delegateAdapter.addAdapter(mainSingleAdapter);
+        delegateAdapter.addAdapter(mainGridAdapter);
         mRecycler.setLayoutManager(virtualLayoutManager);
         mRecycler.setAdapter(delegateAdapter);
+
     }
 
     @Override
     public void getHome(HomeBean homeBean) {
         List<HomeBean.DataBean.BannerBean> banner = homeBean.getData().getBanner();
         list.addAll(banner);
-        delegateAdapter.notifyDataSetChanged();
+        mainSingleAdapter.notifyDataSetChanged();
+        List<HomeBean.DataBean.ChannelBean> channel = homeBean.getData().getChannel();
+        channelBeans.addAll(channel);
+        mainGridAdapter.notifyDataSetChanged();
     }
 
     @Override

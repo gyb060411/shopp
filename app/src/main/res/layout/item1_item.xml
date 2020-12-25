@@ -5,9 +5,9 @@
     <EditText
         android:id="@+id/et_text"
         android:gravity="center"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="15dp"
         android:background="@drawable/shape"
-        android:layout_width="350dp"
+        android:layout_width="380dp"
         android:layout_height="35dp"/>
     <ImageView
         android:src="@drawable/a12"
