@@ -17,9 +17,12 @@ import com.gy.shoppproject.R;
 import com.gy.shoppproject.adapter.MainGridAdapter;
 import com.gy.shoppproject.adapter.MainGridAdapter1;
 import com.gy.shoppproject.adapter.MainGridAdapter2;
+import com.gy.shoppproject.adapter.MainGridAdapter3;
 import com.gy.shoppproject.adapter.MainSingleAdapter;
 import com.gy.shoppproject.adapter.MainSingleAdapter1;
 import com.gy.shoppproject.adapter.MainSingleAdapter2;
+import com.gy.shoppproject.adapter.MainSingleAdapter3;
+import com.gy.shoppproject.adapter.MainSingleAdapter4;
 import com.gy.shoppproject.base.BaseActivity;
 import com.gy.shoppproject.base.BaseFragment;
 import com.gy.shoppproject.bean.HomeBean;
@@ -44,6 +47,10 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
     private MainSingleAdapter2 mainSingleAdapter2;
     private ArrayList<HomeBean.DataBean.NewGoodsListBean> newGoodsListBeans1;
     private MainGridAdapter2 mainGridAdapter2;
+    private MainSingleAdapter3 mainSingleAdapter3;
+    private ArrayList<HomeBean.DataBean.HotGoodsListBean> hotGoodsListBeans;
+    private MainGridAdapter3 mainGridAdapter3;
+    private MainSingleAdapter4 mainSingleAdapter4;
 
 
     @Override
@@ -92,6 +99,18 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
         newGoodsListBeans1 = new ArrayList<>();
         mainGridAdapter2 = new MainGridAdapter2(gridLayoutHelper2, getActivity(), newGoodsListBeans1);
 
+        SingleLayoutHelper singleLayoutHelper3 = new SingleLayoutHelper();
+        mainSingleAdapter3 = new MainSingleAdapter3(singleLayoutHelper3,getActivity());
+
+        GridLayoutHelper gridLayoutHelper3 = new GridLayoutHelper(1);
+        hotGoodsListBeans = new ArrayList<>();
+        mainGridAdapter3 = new MainGridAdapter3(gridLayoutHelper3, getActivity(), hotGoodsListBeans);
+
+        SingleLayoutHelper singleLayoutHelper4 = new SingleLayoutHelper();
+        mainSingleAdapter4 = new MainSingleAdapter4(singleLayoutHelper4,getActivity());
+
+
+        
         delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         delegateAdapter.addAdapter(this.mainSingleAdapter);
         delegateAdapter.addAdapter(mainGridAdapter);
@@ -99,6 +118,9 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
         delegateAdapter.addAdapter(mainGridAdapter1);
         delegateAdapter.addAdapter(mainSingleAdapter2);
         delegateAdapter.addAdapter(mainGridAdapter2);
+        delegateAdapter.addAdapter(mainSingleAdapter3);
+        delegateAdapter.addAdapter(mainGridAdapter3);
+        delegateAdapter.addAdapter(mainSingleAdapter4);
         mRecycler.setLayoutManager(virtualLayoutManager);
         mRecycler.setAdapter(delegateAdapter);
 
@@ -118,6 +140,9 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
         List<HomeBean.DataBean.NewGoodsListBean> newGoodsList = homeBean.getData().getNewGoodsList();
         newGoodsListBeans1.addAll(newGoodsList);
         mainGridAdapter2.notifyDataSetChanged();
+        List<HomeBean.DataBean.HotGoodsListBean> hotGoodsList = homeBean.getData().getHotGoodsList();
+        hotGoodsListBeans.addAll(hotGoodsList);
+        mainGridAdapter3.notifyDataSetChanged();
     }
 
     @Override
