@@ -32,6 +32,7 @@ public class LinearAdapter2 extends DelegateAdapter.Adapter {
         this.context=content;
         this.linearLayoutHelper2=linearLayoutHelper2;
         this.categoryListBeans=categoryListBeans;
+
     }
 
     @Override
@@ -43,12 +44,12 @@ public class LinearAdapter2 extends DelegateAdapter.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(context).inflate(R.layout.item_zui,parent,false);
-        return new HomeHolder(view);
+        return new HomeHold(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        HomeHolder homeHolder= (HomeHolder) holder;
+        HomeHold homeHolder= (HomeHold) holder;
         HomeBean.DataBean.CategoryListBean categoryListBean = categoryListBeans.get(position);
         homeHolder.mName.setText(categoryListBean.getName());
         Log.e("TAG", "onBindViewHolder: 数据"+categoryListBean.toString() );
@@ -60,6 +61,7 @@ public class LinearAdapter2 extends DelegateAdapter.Adapter {
         homeHolder.mRecycler.setLayoutManager(gridLayoutManager);
         mainGridAdapter6 = new MainGridAdapter6(context, goodsListBeans);
         homeHolder.mRecycler.setAdapter(mainGridAdapter6);
+
     }
 
     @Override
@@ -70,14 +72,17 @@ public class LinearAdapter2 extends DelegateAdapter.Adapter {
             return 0;
         }
     }
-    class HomeHolder extends RecyclerView.ViewHolder {
+
+
+    class HomeHold extends RecyclerView.ViewHolder {
         TextView mName;
         RecyclerView mRecycler;
 
-        public HomeHolder(View view){
-            super(view);
-            mRecycler=view.findViewById(R.id.name);
-            mRecycler=view.findViewById(R.id.recycler);
+
+        public HomeHold(@NonNull View itemView) {
+            super(itemView);
+            mName=itemView.findViewById(R.id.name_zui);
+            mRecycler=itemView.findViewById(R.id.recycler);
         }
     }
 }

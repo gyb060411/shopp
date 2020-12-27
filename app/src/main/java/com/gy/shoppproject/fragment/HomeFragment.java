@@ -116,11 +116,12 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
         linearAdapter = new LinearAdapter(getActivity(), linearLayoutHelper1, topicListBeans);
 
         LinearLayoutHelper linearLayoutHelper2 = new LinearLayoutHelper();
+        linearLayoutHelper2.setItemCount(1);
         categoryListBeans = new ArrayList<>();
         linearAdapter2 = new LinearAdapter2(getActivity(),linearLayoutHelper2,categoryListBeans);
 
         delegateAdapter = new DelegateAdapter(virtualLayoutManager);
-        delegateAdapter.addAdapter(this.mainSingleAdapter);
+        delegateAdapter.addAdapter(mainSingleAdapter);
         delegateAdapter.addAdapter(mainGridAdapter);
         delegateAdapter.addAdapter(mainSingleAdapter1);
         delegateAdapter.addAdapter(mainGridAdapter1);

@@ -37,7 +37,7 @@ class MainGridAdapter6 extends RecyclerView.Adapter {
         HomeHolder1 homeHolder= (HomeHolder1) holder;
         homeHolder.mName.setText(goodsListBean.getName());
         homeHolder.mPrice.setText("￥"+goodsListBean.getRetail_price());
-        Glide.with(context).load(goodsListBean.getRetail_price()).into(homeHolder.mImg);
+        Glide.with(context).load(goodsListBean.getList_pic_url()).into(homeHolder.mImg);
     }
 
     @Override
