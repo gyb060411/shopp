@@ -61,8 +61,8 @@ public class MainLinearAdapter extends DelegateAdapter.Adapter {
         private ImageView mImg;
         public Item10Holder(View view){
             super(view);
-            this.mTitle=view.findViewById(R.id.title);
-            this.mSubTitle=view.findViewById(R.id.subtitle);
+//            this.mTitle=view.findViewById(R.id.title);
+//            this.mSubTitle=view.findViewById(R.id.subtitle);
             this.mImg=view.findViewById(R.id.img);
         }
     }

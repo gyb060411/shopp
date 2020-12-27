@@ -1,12 +1,8 @@
 package com.gy.shoppproject.fragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
@@ -15,17 +11,17 @@ import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.gy.shoppproject.R;
+import com.gy.shoppproject.adapter.LinearAdapter;
+import com.gy.shoppproject.adapter.LinearAdapter2;
 import com.gy.shoppproject.adapter.MainGridAdapter;
 import com.gy.shoppproject.adapter.MainGridAdapter1;
 import com.gy.shoppproject.adapter.MainGridAdapter2;
 import com.gy.shoppproject.adapter.MainGridAdapter3;
-import com.gy.shoppproject.adapter.MainLinearAdapter;
 import com.gy.shoppproject.adapter.MainSingleAdapter;
 import com.gy.shoppproject.adapter.MainSingleAdapter1;
 import com.gy.shoppproject.adapter.MainSingleAdapter2;
 import com.gy.shoppproject.adapter.MainSingleAdapter3;
 import com.gy.shoppproject.adapter.MainSingleAdapter4;
-import com.gy.shoppproject.base.BaseActivity;
 import com.gy.shoppproject.base.BaseFragment;
 import com.gy.shoppproject.bean.HomeBean;
 import com.gy.shoppproject.contract.MainContract;
@@ -54,7 +50,9 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
     private MainGridAdapter3 mainGridAdapter3;
     private MainSingleAdapter4 mainSingleAdapter4;
     private ArrayList<HomeBean.DataBean.TopicListBean> topicListBeans;
-    private MainLinearAdapter mainLinearAdapter;
+    private LinearAdapter linearAdapter;
+    private ArrayList<HomeBean.DataBean.CategoryListBean> categoryListBeans;
+    private LinearAdapter2 linearAdapter2;
 
 
     @Override
@@ -113,9 +111,13 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
         SingleLayoutHelper singleLayoutHelper4 = new SingleLayoutHelper();
         mainSingleAdapter4 = new MainSingleAdapter4(singleLayoutHelper4,getActivity());
 
-        LinearLayoutHelper linearLayoutHelper = new LinearLayoutHelper();
-        topicListBeans = new ArrayList<>();
-        mainLinearAdapter = new MainLinearAdapter(linearLayoutHelper, getActivity(), topicListBeans);
+        LinearLayoutHelper linearLayoutHelper1 = new LinearLayoutHelper();
+        topicListBeans= new ArrayList<>();
+        linearAdapter = new LinearAdapter(getActivity(), linearLayoutHelper1, topicListBeans);
+
+        LinearLayoutHelper linearLayoutHelper2 = new LinearLayoutHelper();
+        categoryListBeans = new ArrayList<>();
+        linearAdapter2 = new LinearAdapter2(getActivity(),linearLayoutHelper2,categoryListBeans);
 
         delegateAdapter = new DelegateAdapter(virtualLayoutManager);
         delegateAdapter.addAdapter(this.mainSingleAdapter);
@@ -127,10 +129,12 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
         delegateAdapter.addAdapter(mainSingleAdapter3);
         delegateAdapter.addAdapter(mainGridAdapter3);
         delegateAdapter.addAdapter(mainSingleAdapter4);
-        delegateAdapter.addAdapter(mainLinearAdapter);
+        delegateAdapter.addAdapter(linearAdapter);
+        delegateAdapter.addAdapter(linearAdapter2);
+//
         mRecycler.setLayoutManager(virtualLayoutManager);
         mRecycler.setAdapter(delegateAdapter);
-        mainLinearAdapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -150,9 +154,15 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
         List<HomeBean.DataBean.HotGoodsListBean> hotGoodsList = homeBean.getData().getHotGoodsList();
         hotGoodsListBeans.addAll(hotGoodsList);
         mainGridAdapter3.notifyDataSetChanged();
+
         List<HomeBean.DataBean.TopicListBean> topicList = homeBean.getData().getTopicList();
         topicListBeans.addAll(topicList);
-        mainLinearAdapter.notifyDataSetChanged();
+        linearAdapter.notifyDataSetChanged();
+
+        List<HomeBean.DataBean.CategoryListBean> categoryList = homeBean.getData().getCategoryList();
+        categoryListBeans.addAll(categoryList);
+        linearAdapter2.notifyDataSetChanged();
+        Log.e("TAG", "getHome: +数据"+categoryList.toString() );
     }
 
     @Override
