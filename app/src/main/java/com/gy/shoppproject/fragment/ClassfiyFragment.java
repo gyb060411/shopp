@@ -1,6 +1,7 @@
 package com.gy.shoppproject.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +17,23 @@ import com.gy.shoppproject.R;
 import com.gy.shoppproject.base.BaseFragment;
 import com.gy.shoppproject.bean.AlbumBean;
 import com.gy.shoppproject.bean.ClasBean;
+import com.gy.shoppproject.bean.ClasData;
 import com.gy.shoppproject.bean.HomeBean;
 import com.gy.shoppproject.contract.MainContract;
 import com.gy.shoppproject.presenter.MainPersenterImp;
+import com.gy.shoppproject.utils.ApiService;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import q.rorbin.verticaltablayout.VerticalTabLayout;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class ClassfiyFragment extends BaseFragment<MainPersenterImp> implements MainContract.MainView {
@@ -34,15 +44,6 @@ public class ClassfiyFragment extends BaseFragment<MainPersenterImp> implements 
     private ArrayList<Fragment> fragment;
     private ArrayList<String> TitltList;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_classfiy, container, false);
-        // Inflate the layout for this fragment
-        return inflate;
-    }
-
-
     protected void initView(View view) {
         mTablayout = view.findViewById(R.id.tablayout);
         mViewpager = view.findViewById(R.id.viewpager);
@@ -50,8 +51,7 @@ public class ClassfiyFragment extends BaseFragment<MainPersenterImp> implements 
     }
     @Override
     protected void initData() {
-        presenter.Clas();
-        presenter.clasData();
+        presenter.getClas();
     }
 
     @Override
@@ -79,6 +79,7 @@ public class ClassfiyFragment extends BaseFragment<MainPersenterImp> implements 
 
     }
 
+
     @Override
     public void getClas(ClasBean clasBean) {
         List<ClasBean.DataBean.CategoryListBean> categoryList = clasBean.getData().getCategoryList();
@@ -93,15 +94,12 @@ public class ClassfiyFragment extends BaseFragment<MainPersenterImp> implements 
             calsDadaFragment.setArguments(bundle);
             fragment.add(calsDadaFragment);
         }
+        Log.e("TAG", "getClas: +id"+categoryList.toString() );
         VpAdapter vpAdapter = new VpAdapter(getChildFragmentManager());
         mViewpager.setAdapter(vpAdapter);
         mTablayout.setupWithViewPager(mViewpager);
     }
 
-    @Override
-    public void getClasData(ClasBean clasBean) {
-
-    }
 
     @Override
     public void onError(String error) {

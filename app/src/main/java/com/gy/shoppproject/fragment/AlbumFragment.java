@@ -17,6 +17,7 @@ import com.gy.shoppproject.adapterAlbum.AlbumAdapter;
 import com.gy.shoppproject.base.BaseFragment;
 import com.gy.shoppproject.bean.AlbumBean;
 import com.gy.shoppproject.bean.ClasBean;
+import com.gy.shoppproject.bean.ClasData;
 import com.gy.shoppproject.bean.HomeBean;
 import com.gy.shoppproject.contract.MainContract;
 import com.gy.shoppproject.presenter.MainPersenterImp;
@@ -107,10 +108,6 @@ public class AlbumFragment extends BaseFragment<MainPersenterImp> implements Mai
 
     }
 
-    @Override
-    public void getClasData(ClasBean clasBean) {
-
-    }
 
     @Override
     public void onError(String error) {

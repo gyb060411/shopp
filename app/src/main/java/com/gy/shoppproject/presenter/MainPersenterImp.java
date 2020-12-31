@@ -3,6 +3,7 @@ package com.gy.shoppproject.presenter;
 import com.gy.shoppproject.base.BasePresenter;
 import com.gy.shoppproject.bean.AlbumBean;
 import com.gy.shoppproject.bean.ClasBean;
+import com.gy.shoppproject.bean.ClasData;
 import com.gy.shoppproject.bean.HomeBean;
 import com.gy.shoppproject.contract.MainContract;
 import com.gy.shoppproject.model.MainModelImp;
@@ -62,7 +63,7 @@ class MainPersenterImp extends BasePresenter<MainContract.MainView,MainContract.
     }
 
     @Override
-    public void Clas() {
+    public void getClas() {
         iModel.getModel(URLConstart.Clas_Url, new InetCallBack<ClasBean>() {
             @Override
             public void onSuccess(ClasBean clasBean) {
@@ -76,19 +77,5 @@ class MainPersenterImp extends BasePresenter<MainContract.MainView,MainContract.
         });
     }
 
-    @Override
-    public void clasData() {
-        iModel.getModel(URLConstart.Clas_Url, new InetCallBack<ClasBean>() {
-            @Override
-            public void onSuccess(ClasBean clasBean) {
-                iView.getClas(clasBean);
-            }
-
-            @Override
-            public void onFail(String error) {
-                iView.onError(error);
-            }
-        });
-    }
 
 }

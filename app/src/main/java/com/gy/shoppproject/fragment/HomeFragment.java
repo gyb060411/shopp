@@ -25,6 +25,7 @@ import com.gy.shoppproject.adapter.MainSingleAdapter4;
 import com.gy.shoppproject.base.BaseFragment;
 import com.gy.shoppproject.bean.AlbumBean;
 import com.gy.shoppproject.bean.ClasBean;
+import com.gy.shoppproject.bean.ClasData;
 import com.gy.shoppproject.bean.HomeBean;
 import com.gy.shoppproject.contract.MainContract;
 import com.gy.shoppproject.presenter.MainPersenterImp;
@@ -183,10 +184,6 @@ public class HomeFragment extends BaseFragment<MainPersenterImp> implements Main
 
     }
 
-    @Override
-    public void getClasData(ClasBean clasBean) {
-
-    }
 
     @Override
     public void onError(String error) {

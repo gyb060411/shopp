@@ -4,6 +4,7 @@ import com.gy.shoppproject.base.BaseModel;
 import com.gy.shoppproject.base.BaseView;
 import com.gy.shoppproject.bean.AlbumBean;
 import com.gy.shoppproject.bean.ClasBean;
+import com.gy.shoppproject.bean.ClasData;
 import com.gy.shoppproject.bean.HomeBean;
 import com.gy.shoppproject.utils.InetCallBack;
 
@@ -14,7 +15,6 @@ class MainContract {
         void getAlbum(AlbumBean albumBean);
         void getAlbum2(AlbumBean albumBean);
         void getClas(ClasBean clasBean);
-        void getClasData(ClasBean clasBean);
         void onError(String error);
     }
     public interface MainModel extends BaseModel{
@@ -24,7 +24,6 @@ class MainContract {
         void Home();
         void Album();
         void Album2();
-        void Clas();
-        void clasData();
+        void getClas();
     }
 }
