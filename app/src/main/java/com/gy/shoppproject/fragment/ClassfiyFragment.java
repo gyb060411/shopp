@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -93,7 +94,8 @@ public class ClassfiyFragment extends BaseFragment<MainPersenterImp> implements 
             fragment.add(calsDadaFragment);
         }
         VpAdapter vpAdapter = new VpAdapter(getChildFragmentManager());
-
+        mViewpager.setAdapter(vpAdapter);
+        mTablayout.setupWithViewPager(mViewpager);
     }
 
     @Override
@@ -122,6 +124,11 @@ public class ClassfiyFragment extends BaseFragment<MainPersenterImp> implements 
         public int getCount() {
             return fragment.size();
         }
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return TitltList.get(position).toString();
 
+        }
     }
 }
