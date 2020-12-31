@@ -23,11 +23,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private HomeFragment homeFragment;
-    private AlbumFragment albumFragment;
-    private ClassfiyFragment classfiyFragment;
-    private CartFragment cartFragment;
-    private MeFragment meFragment;
+
     private CanSlidingViewpager mViewPager;
     private BottomNavigationView mNavView;
     private ArrayList<Fragment> fragment;
@@ -92,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
            }
        });
     }
+
 
     private void initFragment() {
         fragment = new ArrayList<>();

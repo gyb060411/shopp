@@ -1,6 +1,7 @@
 package com.gy.shoppproject.presenter;
 
 import com.gy.shoppproject.base.BasePresenter;
+import com.gy.shoppproject.bean.AlbumBean;
 import com.gy.shoppproject.bean.HomeBean;
 import com.gy.shoppproject.contract.MainContract;
 import com.gy.shoppproject.model.MainModelImp;
@@ -28,4 +29,35 @@ class MainPersenterImp extends BasePresenter<MainContract.MainView,MainContract.
             }
         });
     }
+
+    @Override
+    public void Album() {
+        iModel.getModel(URLConstart.Album_Url, new InetCallBack<AlbumBean>() {
+            @Override
+            public void onSuccess(AlbumBean albumBean) {
+                iView.getAlbum(albumBean);
+            }
+
+            @Override
+            public void onFail(String error) {
+                iView.onError(error);
+            }
+        });
+    }
+
+    @Override
+    public void Album2() {
+        iModel.getModel(URLConstart.Album_Url2, new InetCallBack<AlbumBean>() {
+            @Override
+            public void onSuccess(AlbumBean albumBean) {
+                iView.getAlbum2(albumBean);
+            }
+
+            @Override
+            public void onFail(String error) {
+                iView.onError(error);
+            }
+        });
+    }
+
 }

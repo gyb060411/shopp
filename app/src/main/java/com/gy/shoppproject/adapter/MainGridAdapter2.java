@@ -31,6 +31,9 @@ public class MainGridAdapter2 extends DelegateAdapter.Adapter {
     public MainGridAdapter2(GridLayoutHelper gridLayoutHelper2, Context context, ArrayList<HomeBean.DataBean.NewGoodsListBean> newGoodsListBeans1) {
         this.gridLayoutHelper=gridLayoutHelper2;
         this.context=context;
+
+
+
         this.newGoodsListBeans1=newGoodsListBeans1;
     }
 
@@ -41,6 +44,8 @@ public class MainGridAdapter2 extends DelegateAdapter.Adapter {
 
     @NonNull
     @Override
+
+
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(context).inflate(R.layout.item6_item,parent,false);
         return new Item6Holder(view);
