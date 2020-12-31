@@ -16,6 +16,7 @@ import com.gy.shoppproject.R;
 import com.gy.shoppproject.adapterAlbum.AlbumAdapter;
 import com.gy.shoppproject.base.BaseFragment;
 import com.gy.shoppproject.bean.AlbumBean;
+import com.gy.shoppproject.bean.ClasBean;
 import com.gy.shoppproject.bean.HomeBean;
 import com.gy.shoppproject.contract.MainContract;
 import com.gy.shoppproject.presenter.MainPersenterImp;
@@ -99,6 +100,16 @@ public class AlbumFragment extends BaseFragment<MainPersenterImp> implements Mai
                 n.fullScroll(ScrollView.FOCUS_UP);
             }
         });
+    }
+
+    @Override
+    public void getClas(ClasBean clasBean) {
+
+    }
+
+    @Override
+    public void getClasData(ClasBean clasBean) {
+
     }
 
     @Override
