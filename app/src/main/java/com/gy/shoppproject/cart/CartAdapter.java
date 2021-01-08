@@ -84,7 +84,7 @@ public class CartAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View view) {
                 plus++;
-                cartHolder.mTvNumber.setText(plus);
+                cartHolder.mTvNumber.setText(""+plus);
             }
         });
         cartHolder.mTvMinus.setOnClickListener(new View.OnClickListener() {

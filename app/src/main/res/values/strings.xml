@@ -20,5 +20,8 @@
     <string name="btn_list_place">下单</string>
     <string name="tv_list_compile">编辑</string>
     <string name="tv_select">已选择：</string>
+    <string name="Me_my">我的</string>
+    <string name="Me_login">点击登录</string>
+
 <!--    <string name=""></string>-->
 </resources>
