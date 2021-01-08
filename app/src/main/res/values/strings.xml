@@ -7,4 +7,18 @@
     <string name="bar_name_sort">分类</string>
     <string name="bar_name_shop">购物车</string>
     <string name="bar_name_me">我的</string>
+    <string name="et_name">请输入用户名</string>
+    <string name="et_pwd">请输入密码</string>
+    <string name="CheckBox_jizhu">是否记住密码</string>
+    <string name="btn_login">登录</string>
+    <string name="btn_riget">注册</string>
+    <string name="name_pass_null_toast">用户密码不能为空</string>
+    <string name="et_right_username">请输入用户名</string>
+    <string name="et_right_pwd">请输入密码</string>
+    <string name="et_right_pwds">请确定密码</string>
+    <string name="et_right_verifition">请输入验证码</string>
+    <string name="btn_list_place">下单</string>
+    <string name="tv_list_compile">编辑</string>
+    <string name="tv_select">已选择：</string>
+<!--    <string name=""></string>-->
 </resources>

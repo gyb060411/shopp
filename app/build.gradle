@@ -49,5 +49,7 @@ dependencies {
     implementation ('com.alibaba.android:vlayout:1.2.8@aar') {
         transitive = true
     }
+    //侧边的tablayout
     implementation 'q.rorbin:VerticalTabLayout:1.2.5'
+    implementation 'com.tencent:mmkv-static:1.2.7'
 }

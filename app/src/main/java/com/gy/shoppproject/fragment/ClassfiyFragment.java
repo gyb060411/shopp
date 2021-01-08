@@ -49,6 +49,7 @@ public class ClassfiyFragment extends BaseFragment<MainPersenterImp> implements 
         mViewpager = view.findViewById(R.id.viewpager);
 
     }
+
     @Override
     protected void initData() {
         presenter.getClas();
@@ -63,7 +64,7 @@ public class ClassfiyFragment extends BaseFragment<MainPersenterImp> implements 
     protected int getLayoutID() {
         return R.layout.fragment_classfiy;
     }
-
+        //这些多余的方法，不用管他，我只不过把所有的方法都写在一个类里面了
     @Override
     public void getHome(HomeBean homeBean) {
 
@@ -82,10 +83,13 @@ public class ClassfiyFragment extends BaseFragment<MainPersenterImp> implements 
 
     @Override
     public void getClas(ClasBean clasBean) {
+        //p层回来的数据
         List<ClasBean.DataBean.CategoryListBean> categoryList = clasBean.getData().getCategoryList();
         TitltList = new ArrayList<>();
         fragment = new ArrayList<>();
+        //跟以前的嵌套差不多，就是把tablayout换成了侧边的tablayout，需要添加依赖
         for(int i=0;i<categoryList.size();i++){
+            //这个titltList是tablayout存放数据的集合，由于侧边的tablyout缺啥settext赋值属性，必须换方法去写
             TitltList.add(categoryList.get(i).getName());
             int id = categoryList.get(i).getId();
             CalsDadaFragment calsDadaFragment = new CalsDadaFragment();
@@ -95,6 +99,7 @@ public class ClassfiyFragment extends BaseFragment<MainPersenterImp> implements 
             fragment.add(calsDadaFragment);
         }
         Log.e("TAG", "getClas: +id"+categoryList.toString() );
+        //viewpage的内部类方法
         VpAdapter vpAdapter = new VpAdapter(getChildFragmentManager());
         mViewpager.setAdapter(vpAdapter);
         mTablayout.setupWithViewPager(mViewpager);

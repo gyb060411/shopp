@@ -47,6 +47,7 @@ public class AlbumFragment extends BaseFragment<MainPersenterImp> implements Mai
     }
     @Override
     protected void initData() {
+        //有上一页跟下一页，一个bean类，我调用了两次
         presenter.Album();
         presenter.Album2();
     }
@@ -65,22 +66,23 @@ public class AlbumFragment extends BaseFragment<MainPersenterImp> implements Mai
     public void getHome(HomeBean homeBean) {
 
     }
-
+        //本页两个内容公用的一个bean类，一个适配器，不用产生多疑
     @Override
     public void getAlbum(AlbumBean albumBean) {
-
+        //mp层返回来的第一页bean类     73-75行是进入默认显示第一页内容
         List<AlbumBean.DataBeanX.DataBean> data = albumBean.getData().getData();
         list.addAll(data);
         albumAdapter.notifyDataSetChanged();
+        //第一页的点击事件
         mBtnOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mBtnOne.setEnabled(false);
+                mBtnOne.setEnabled(false);//按钮的点击事件会有变化，true代码未点击，false代表点击
                 mBtnTwo.setEnabled(true);
                 list.clear();
                 list.addAll(data);
                 albumAdapter.notifyDataSetChanged();
-                n.fullScroll(ScrollView.FOCUS_UP);
+                n.fullScroll(ScrollView.FOCUS_UP);//我在xml布局写的一个垂直滑动的控件，用来点击下一页的时候回到顶部
             }
         });
 
@@ -88,16 +90,16 @@ public class AlbumFragment extends BaseFragment<MainPersenterImp> implements Mai
 
     @Override
     public void getAlbum2(AlbumBean albumBean) {
+        //bean类的第二个方法（第二页）
         List<AlbumBean.DataBeanX.DataBean> data = albumBean.getData().getData();
         mBtnTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mBtnOne.setEnabled(true);
+                mBtnOne.setEnabled(true);//按钮的点击事件会有变化，true代码未点击，false代表点击
                 mBtnTwo.setEnabled(false);
                 list.clear();
                 list.addAll(data);
                 albumAdapter.notifyDataSetChanged();
-                mRecycler.scrollToPosition(0);
                 n.fullScroll(ScrollView.FOCUS_UP);
             }
         });

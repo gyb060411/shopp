@@ -11,34 +11,51 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.gy.shoppproject.base.BaseActivity;
+import com.gy.shoppproject.bean.AlbumBean;
+import com.gy.shoppproject.bean.ClasBean;
+import com.gy.shoppproject.bean.HomeBean;
+import com.gy.shoppproject.contract.MainContract;
 import com.gy.shoppproject.fragment.AlbumFragment;
 import com.gy.shoppproject.fragment.CartFragment;
 import com.gy.shoppproject.fragment.ClassfiyFragment;
 import com.gy.shoppproject.fragment.HomeFragment;
 import com.gy.shoppproject.fragment.MeFragment;
+import com.gy.shoppproject.presenter.MainPersenterImp;
 import com.gy.shoppproject.utils.CanSlidingViewpager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity<MainPersenterImp> implements MainContract.MainView {
 
 
-    private CanSlidingViewpager mViewPager;
+    private ViewPager mViewPager;
     private BottomNavigationView mNavView;
     private ArrayList<Fragment> fragment;
 
     MyFragmentPagerAdapter myFragmentPagerAdapter;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        initView();
+    protected int getLayoutID() {
+        return R.layout.activity_main;
     }
-    private void initView() {
+
+    @Override
+    protected MainPersenterImp getPersenter() {
+        return new MainPersenterImp();
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    protected void initView() {
         mViewPager = findViewById(R.id.viewPager);
         mNavView = findViewById(R.id.nav_view);
-        mViewPager.setScrollble(false);
+
+//            mViewPager.setScrollble(false);
         initFragment();
 
         myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(),fragment);
@@ -76,20 +93,16 @@ public class MainActivity extends AppCompatActivity {
            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
            }
-
            @Override
            public void onPageSelected(int position) {
                 mNavView.getMenu().getItem(position).setChecked(true);
            }
-
            @Override
            public void onPageScrollStateChanged(int state) {
 
            }
        });
     }
-
-
     private void initFragment() {
         fragment = new ArrayList<>();
         fragment.add(new HomeFragment());
@@ -98,6 +111,32 @@ public class MainActivity extends AppCompatActivity {
         fragment.add(new CartFragment());
         fragment.add(new MeFragment());
     }
+
+    @Override
+    public void getHome(HomeBean homeBean) {
+
+    }
+
+    @Override
+    public void getAlbum(AlbumBean albumBean) {
+
+    }
+
+    @Override
+    public void getAlbum2(AlbumBean albumBean) {
+
+    }
+
+    @Override
+    public void getClas(ClasBean clasBean) {
+
+    }
+
+    @Override
+    public void onError(String error) {
+
+    }
+
     class MyFragmentPagerAdapter extends FragmentPagerAdapter{
 
         List<Fragment> fragments;

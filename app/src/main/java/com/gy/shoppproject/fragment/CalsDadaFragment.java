@@ -23,6 +23,7 @@ import com.gy.shoppproject.bean.HomeBean;
 import com.gy.shoppproject.contract.MainContract;
 import com.gy.shoppproject.presenter.MainPersenterImp;
 import com.gy.shoppproject.utils.ApiService;
+import com.gy.shoppproject.utils.URLConstart;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -55,18 +56,20 @@ public class CalsDadaFragment extends BaseFragment<MainPersenterImp> implements 
         mTvName = view.findViewById(R.id.tv_name);
         mTvHeatName =view. findViewById(R.id.tv_heat_name);
         mRecyler = view.findViewById(R.id.recyler);
+        //接收tablayout页面传过来的id
         Bundle arguments = getArguments();
         id = arguments.getInt("id");
         subCategoryListBeans = new ArrayList<>();
         clasAdapter1 = new ClasAdapter(getActivity());
+        //布局为网格布局，每行三列
         mRecyler.setLayoutManager(new GridLayoutManager(getActivity(),3));
         mRecyler.setAdapter(clasAdapter1);
     }
-
+    //viewpager里面的内容，我刚开始写的时候用mvp传id没传明白，所有这个viewpager我没用mvp去写，直接用的原生的网络请求写的
     @Override
     protected void initData() {
         new Retrofit.Builder()
-                .baseUrl(ApiService.BASE_URL)
+                .baseUrl(URLConstart.Base_Url)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
@@ -84,6 +87,7 @@ public class CalsDadaFragment extends BaseFragment<MainPersenterImp> implements 
                     public void onNext(@NonNull ClasData clasData) {
                         ClasData.DataBean.CurrentCategoryBean currentCategory = clasData.getData().getCurrentCategory();
                         List<ClasData.DataBean.CurrentCategoryBean.SubCategoryListBean> subCategoryList = clasData.getData().getCurrentCategory().getSubCategoryList();
+                        //这里是重点，仔细看我的布局，我没有把集合传给适配器，是在适配器里面也了一个方法，在适配器里添加的数据跟刷新的ui（第93行）
                         mTvName.setText(currentCategory.getFront_name());
                         mTvHeatName.setText(currentCategory.getName()+"分类");
                         Glide.with(getActivity()).load(currentCategory.getWap_banner_url()).into(mImage);

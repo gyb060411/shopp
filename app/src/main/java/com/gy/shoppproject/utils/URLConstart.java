@@ -8,4 +8,6 @@ class URLConstart {
     public static String Album_Url2=Base_Url+"api/topic/list?page=2&size=10";
     public static String Clas_Url=Base_Url+"catalog/index";
     public static String ClasData_Url=Base_Url+"api/catalog/current";
+    public static String Login_Url="auth/login";
+    public static String Cart_URL="api/cart/index";
 }

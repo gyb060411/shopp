@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -16,22 +17,23 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 public
-class RetrofitUtils implements INetWorkInterface{
+class RetrofitUtils implements INetWorkInterface {
 
     private static RetrofitUtils retrofitUtils;
     private final ApiService apiService;
 
-    RetrofitUtils(){
+    RetrofitUtils() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URLConstart.Base_Url)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         apiService = retrofit.create(ApiService.class);
     }
-    public static RetrofitUtils getInstance(){
-        if(retrofitUtils==null){
-            synchronized (RetrofitUtils.class){
-                if(retrofitUtils == null){
+
+    public static RetrofitUtils getInstance() {
+        if (retrofitUtils == null) {
+            synchronized (RetrofitUtils.class) {
+                if (retrofitUtils == null) {
                     retrofitUtils = new RetrofitUtils();
                 }
             }
@@ -66,7 +68,7 @@ class RetrofitUtils implements INetWorkInterface{
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        callBack.onFail("网络异常："+e.toString());
+                        callBack.onFail("网络异常：" + e.toString());
                     }
 
                     @Override
@@ -75,4 +77,43 @@ class RetrofitUtils implements INetWorkInterface{
                     }
                 });
     }
+
+    @Override
+    public <T> void getlogin(String url, HashMap<String, String> hashMap, HashMap<String, String> headers, InetCallBack<T> callBack) {
+        apiService.getlogin(url, hashMap, headers)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull ResponseBody responseBody) {
+                        try {
+                            String string = responseBody.string();
+                            Type[] genericInterfaces = callBack.getClass().getGenericInterfaces();
+                            Type[] actualTypeArguments = ((ParameterizedType) genericInterfaces[0]).getActualTypeArguments();
+                            Type type = actualTypeArguments[0];
+                            T json = new Gson().fromJson(string, type);
+                            callBack.onSuccess(json);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        callBack.onFail("网络异常：" + e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
 }
