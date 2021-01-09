@@ -101,8 +101,9 @@ public class LoginActivity extends BaseActivity<LoginPresenterImp> implements Lo
     @Override
     public void getLogin_View() {
 
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, MainActivity.class);
+//        startActivity(intent);
+        finish();
     }
 
     @Override

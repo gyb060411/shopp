@@ -1,5 +1,6 @@
 package com.gy.shoppproject.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.gy.shoppproject.R;
+import com.gy.shoppproject.login.view.LoginActivity;
+import com.gy.shoppproject.my.DizhiActivity;
 
 
-public class MeFragment extends Fragment {
+public class MeFragment extends Fragment implements View.OnClickListener {
 
 
     private ConstraintLayout mMyConstraint;
@@ -57,6 +60,21 @@ public class MeFragment extends Fragment {
         mLlFiveBangzhu = view.findViewById(R.id.ll_five_bangzhu);
         mLlFiveFankui = view.findViewById(R.id.ll_five_fankui);
 
+        mMeLogin.setOnClickListener(this);
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.Me_login:
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.ll_five_dizhi:
+                Intent intent1 = new Intent(getActivity(), DizhiActivity.class);
+                startActivity(intent1);
+                break;
+        }
     }
 }

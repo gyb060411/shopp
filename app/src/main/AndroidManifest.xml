@@ -14,10 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ShoppProject">
-        <activity android:name=".login.view.RightActivity"></activity>
-        <activity android:name=".login.view.LoginActivity">
-
-        </activity>
+        <activity android:name=".my.CompileActivity"></activity>
+        <activity android:name=".my.DizhiActivity" />
+        <activity android:name=".login.view.RightActivity" />
+        <activity android:name=".login.view.LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
